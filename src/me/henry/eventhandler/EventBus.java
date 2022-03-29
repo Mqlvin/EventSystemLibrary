@@ -22,7 +22,7 @@ public class EventBus {
             try {
                 event = (Class<? extends Event>) method.getParameters()[0].getType();
             } catch(Exception e) {
-                System.out.println("Method " + method.getName() + " was annotated as an event, however it had no or an invalid event parameter.");
+                System.out.println("Method " + method.getName() + " was an annotated event, however the method had no event object parameter.");
                 continue;
             }
             if(!listeners.containsKey(event)) {
@@ -43,7 +43,8 @@ public class EventBus {
                 try {
                     method.getMethod().invoke(method.getListener(), event);
                 } catch(Exception e) {
-                    System.out.println("Unable to execute method from class " + method.getListener().getClass().getName() + " during event system invocation. ");
+                    System.out.println("Error while invoking method from class " + method.getListener().getClass().getName());
+                    e.printStackTrace();
                 }
             });
         }
